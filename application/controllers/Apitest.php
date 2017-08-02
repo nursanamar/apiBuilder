@@ -40,7 +40,19 @@ class Apitest extends MY_Controller {
 	{
 		$data = $this->apimod->delete(array("dataId" => $id),$table);
 		$response["status"] = $data ? "ok":"failed";
-		$response["desc"] = "delte";
+		$this->sendResponse($response);
+	}
+	
+	public function updateById($table)
+	{
+		$data = $this->getBody();
+		$id = $data["dataId"];
+		$status = $this->apimod->update($id,$data,$table);
+		$response = array(
+			"status" => $status ? "ok":"failed",
+			"desc" => $status,
+			"data" => $data
+		);
 		$this->sendResponse($response);
 	}
 }	

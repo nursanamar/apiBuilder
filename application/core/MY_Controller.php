@@ -54,7 +54,6 @@ class MY_Controller extends CI_Controller {
 			
 			} catch( \UnexpectedValueException $ec) {
 			 $this->output->set_status_header(401);
-			 print_r($ec);
 		die();
 		}
 		

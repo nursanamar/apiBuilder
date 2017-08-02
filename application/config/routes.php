@@ -57,6 +57,7 @@ $route["jwt/me"]['get']  = 'apitest/index';
 $route['jwt/getall/(:any)']['get'] = 'apitest/getAll/$1';
 $route['jwt/get/(:any)/(:num)']['get'] = 'apitest/getById/$1/$2';
 $route['jwt/delete/(:any)/(:num)']['delete'] = 'apitest/deleteById/$1/$2';
+$route['jwt/update/(:any)']['put'] = 'apitest/updateById/$1';
 $route["tes"] = "remap/tes/asd123";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
