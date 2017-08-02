@@ -4,6 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class MY_Controller extends CI_Controller {
 	
 	private $jwtToken;
+	public $payload;
+	
+	 public function __construct()
+	{
+		parent::__construct();
+		$this->load->library('jwt');
+	}
 	
 	 public function sendResponse($data,$headers = array())
 	{
@@ -31,7 +38,6 @@ class MY_Controller extends CI_Controller {
 		
 		if($token === null){
 		 $this->output->set_status_header(401);
-		 var_dump($this->input->request_headers());
 		 die();
 		}
 		
@@ -44,13 +50,15 @@ class MY_Controller extends CI_Controller {
 		
 		 try{
 		 
-			$valid = $this->jwt->decode($this->jwtToken,$this->input->get_request->header("User-agent")."nursan");	
+			$valid = $this->jwt->decode($this->jwtToken,$this->input->get_request_header("User-agent",true)."nursan");	
 			
 			} catch( \UnexpectedValueException $ec) {
-			 $data = array("hello","signature failed");
-		$this->sendResponse($data);
+			 $this->output->set_status_header(401);
+			 print_r($ec);
 		die();
 		}
+		
+		$this->payload = $valid;
 	}
 	
 }

@@ -35,7 +35,7 @@ class Jwth extends MY_Controller {
 		$data = array("iss" => $userAgent,"id" => $id);
 		if($user[0]  === $body["user"] && $user[1] === $body['pass'])
 		{
-			$token  = $this->jwt->encode($data,$id);
+			$token  = $this->jwt->encode($data,$userAgent."nursan");
 			$response = 	array("status" => "Ok","desc" => "login succes","data" => array("token"  => $token));
 		}else{
 			$response = array("status" => "Failed","desc" => "login failed, chek your cerdentials");
