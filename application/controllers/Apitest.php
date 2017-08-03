@@ -57,10 +57,13 @@ class Apitest extends MY_Controller {
 	
 	public function add($table)
 	{
-		$data = $this->getBody();
-		$status = $this->apimod->insert($data,$table);
+		$datas = $this->getBody();
+		foreach($datas as $data)
+		{
+			$status = $this->apimod->insert($data,$table);
+		}
 		$response  = array(
-			"status" => $status ? "ok":"failed"
+			"status" =>  "ok"
 		);
 		$this->sendResponse($response);
 	}
