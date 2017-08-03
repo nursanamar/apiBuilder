@@ -63,7 +63,7 @@ class Api extends CI_Controller {
 	public function createTable()
 	{
 		$fields = array(
-			"dataId" => array(
+			"id" => array(
 				"type" => "INT",
 				"constraint" => "5",
 				"auto_increment"  => TRUE
@@ -72,10 +72,14 @@ class Api extends CI_Controller {
 				"type" => "VARCHAR",
 				"constraint" => "100"
 			),
+			"dataStatus" => array(
+				"type" => "VARCHAR",
+				"constraint" => "100"
+			),
 		);
 		
 		$this->dbforge->add_field($fields);
-		$this->dbforge->add_key("dataId",TRUE);
+		$this->dbforge->add_key("id",TRUE);
 		if($this->dbforge->create_table("data")){
 			echo "sukses";
 		}else{

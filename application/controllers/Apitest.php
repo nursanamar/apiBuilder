@@ -29,7 +29,7 @@ class Apitest extends MY_Controller {
 	
 	public function getById($table,$id)
 	{
-		$data = $this->apimod->getWhere(array("dataId"  => $id),$table);
+		$data = $this->apimod->getWhere(array("id"  => $id),$table);
 		 $response["status"] = "ok";
 		$response["desc"] = "data fetched";
 		$response["data"] = $data;
@@ -43,15 +43,24 @@ class Apitest extends MY_Controller {
 		$this->sendResponse($response);
 	}
 	
-	public function updateById($table)
+	public function updateById($table,$id)
 	{
 		$data = $this->getBody();
-		$id = $data["dataId"];
-		$status = $this->apimod->update($id,$data,$table);
+		$status = $this->apimod->update(array("id" => $id),$data,$table);
 		$response = array(
 			"status" => $status ? "ok":"failed",
 			"desc" => $status,
 			"data" => $data
+		);
+		$this->sendResponse($response);
+	}
+	
+	public function add($table)
+	{
+		$data = $this->getBody();
+		$status = $this->apimod->insert($data,$table);
+		$response  = array(
+			"status" => $status ? "ok":"failed"
 		);
 		$this->sendResponse($response);
 	}
