@@ -33,7 +33,7 @@ class MY_Controller extends CI_Controller {
 	public function checkToken()
 	{
 		$status = "auth";
-		$headers = $this->input->get_request_header("Authentication");
+		$headers = $this->input->get_request_header("Authorization");
 		list($token) = sscanf($headers,"Bearer %s");
 		
 		if($token === null){
