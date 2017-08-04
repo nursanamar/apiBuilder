@@ -1,0 +1,12 @@
+{
+    "name": "ci/ci",
+    "description": "nursan/restfullci",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Nursan amar",
+            "email": "nursan011@gmail.com"
+        }
+    ],
+    "require": {}
+}
