@@ -59,7 +59,7 @@ $route["jwt/me"]['get']  = 'apitest/index';
 
 $route["install/tabel"] = "api/createTable";
 
-$route["header"] = "api/getHeader";
+$route["header/"] = "api/getHeader";
 
 $route['jwt/getall/(:any)']['get'] = 'apitest/getAll/$1';
 
