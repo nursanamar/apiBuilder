@@ -57,6 +57,8 @@ $route['jwt/login']['post'] = 'jwth/login';
 
 $route["jwt/me"]['get']  = 'apitest/index';
 
+$route["install/tabel"] = "api/createTable";
+
 $route['jwt/getall/(:any)']['get'] = 'apitest/getAll/$1';
 
 $route['jwt/get/(:any)/(:num)']['get'] = 'apitest/getById/$1/$2';
