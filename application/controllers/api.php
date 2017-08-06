@@ -82,6 +82,7 @@ class Api extends CI_Controller {
 		$this->dbforge->add_key("id",TRUE);
 		if($this->dbforge->create_table("data")){
 			echo "sukses";
+			var_dump($fields);
 		}else{
 			echo "gagal";
 		}
