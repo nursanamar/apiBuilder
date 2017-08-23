@@ -17,14 +17,14 @@ class Jwth extends MY_Controller {
 	 * So any other public methods not prefixed with an underscore will
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 
+
 	 */
 	public function __construct() {
 		parent::__construct();
 		$this->load->dbforge();
 		$this->load->library('jwt');
 	}
-	
+
 	public function login()
 	{
 		$user = array("nursan","amar");
@@ -40,10 +40,10 @@ class Jwth extends MY_Controller {
 		}else{
 			$response = array("status" => "Failed","desc" => "login failed, chek your cerdentials");
 		}
-		$headers = array(
-			"X-Custom-header" => "Value",
-			"X-Api-Builder-version" => "Beta 1.0"
-			);
-		return $this->sendResponse($response,$headers);
+		// $headers = array(
+		// 	"X-Custom-header" => "Value",
+		// 	"X-Api-Builder-version" => "Beta 1.0"
+		// 	);
+		return $this->sendResponse($response);
 	}
 }
