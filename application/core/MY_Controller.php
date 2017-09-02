@@ -5,11 +5,13 @@ class MY_Controller extends CI_Controller {
 
 	private $jwtToken;
 	public $payload;
+	public $user;
 
 	 public function __construct()
 	{
 		parent::__construct();
 		$this->load->library('jwt');
+		$this->load->model('login');
 	}
 
 	 public function sendResponse($data,$headers = array())
@@ -17,11 +19,10 @@ class MY_Controller extends CI_Controller {
 		foreach($headers as $key => $value){
 			$this->output->set_header($key." : ".$value);
 		}
-		$this->output->set_content_type('application/json');
-		//  $this->output->set_content_type("application/json");
-		//  $this->output->set_header("Access-Control-Allow-Origin:*");
-		//  $this->output->set_header("X-Message:ApiBuilder/1.0");
-		//  $this->output->set_header("Server:ApiBuilder",true);
+		 $this->output->set_content_type("application/json");
+		//  $this->output->set_header("Access-Control-Allow-Origin : *");
+		//  $this->output->set_header("X-Message : ApiBuilder/1.0");
+		//  $this->output->set_header("Server : ApiBuilder",true);
 		$this->output->set_output(json_encode($data));
 	}
 
@@ -59,6 +60,32 @@ class MY_Controller extends CI_Controller {
 		}
 
 		$this->payload = $valid;
+	}
+
+	public function generateToken()
+	{
+		$input = $this->getBody();
+		$iss = $this->input->get_request_header('User-agent',true);
+		$user = $this->login->chekUser($input['user'],$input['pass']);
+		$payload = array('id' => $user['id'] ,'name' => $user['name'] ,'iss' => $iss );
+		$token = $this->jwt->encode($payload,$iss."nursan");
+
+		return $token;
+	}
+
+	public function validateLogin()
+	{
+		$input = $this->getBody();
+		if (isset($input['user']) && isset($input['pass'])) {
+			$result = $this->login->chekUser($input['user'],$input['pass']);
+		}else {
+			throw new Exception("check your field", 1);
+		}
+		$this->user = array(
+			'id' => $result['id'],
+			'name' => $result['name']
+		);
+		return ($result === null )? false : true;
 	}
 
 }

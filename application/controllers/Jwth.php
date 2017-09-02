@@ -21,29 +21,33 @@ class Jwth extends MY_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->load->dbforge();
-		$this->load->library('jwt');
 	}
 
 	public function login()
 	{
-		$user = array("nursan","amar");
-		$response = array();
-		$body = $this->getBody();
-		$userAgent = $this->input->get_request_header("User-agent",true);
-		$id = $body["user"];
-		$data = array("iss" => $userAgent,"id" => $id);
-		if($user[0]  === $body["user"] && $user[1] === $body['pass'])
-		{
-			$token  = $this->jwt->encode($data,$userAgent."nursan");
-			$response = 	array("status" => "Ok","desc" => "login succes","data" => array("token"  => $token));
-		}else{
-			$response = array("status" => "Failed","desc" => "login failed, chek your cerdentials");
+		try {
+			$check = $this->validateLogin();
+		} catch (Exception $e) {
+			$this->output->set_status_header(400);
+			die();
 		}
-		// $headers = array(
-		// 	"X-Custom-header" => "Value",
-		// 	"X-Api-Builder-version" => "Beta 1.0"
-		// 	);
-		return $this->sendResponse($response);
+    if($check){
+      $token = $this->generateToken();
+      $response = array(
+        'status' => 'ok',
+        'desc' => "Login succes",
+        'data' => array(
+          'token' => $token,
+          'user' => $this->user,
+        ),
+      );
+
+    }else {
+      $response = array(
+        'status' => 'failed',
+        'desc' => "login failed, please check your pass",
+      );
+    }
+    $this->sendResponse($response);
 	}
 }

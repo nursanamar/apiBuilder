@@ -52,20 +52,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['get/:any/:any'] = 'remap/$1/$2';
 $route['update']['put'] = 'remap/update/asd123';
+$route['login']['post'] = 'jwth/login';
 
-$route['jwt/login']['post'] = 'jwth/login';
+$route["me"]['get']  = 'apitest/index';
 
-$route["jwt/me"]['get']  = 'apitest/index';
+$route['(:any)']['get'] = 'apitest/getAll/$1';
 
-$route['jwt/getall/(:any)']['get'] = 'apitest/getAll/$1';
+$route['(:any)/(:num)']['get'] = 'apitest/getById/$1/$2';
 
-$route['jwt/get/(:any)/(:num)']['get'] = 'apitest/getById/$1/$2';
+$route['(:any)/(:num)']['delete'] = 'apitest/deleteById/$1/$2';
 
-$route['jwt/delete/(:any)/(:num)']['delete'] = 'apitest/deleteById/$1/$2';
+$route['(:any)/(:num)']['put'] = 'apitest/updateById/$1/$2';
 
-$route['jwt/update/(:any)/(:num)']['put'] = 'apitest/updateById/$1/$2';
+$route['(:any)']['post'] = 'apitest/add/$1';
 
-$route['jwt/add/(:any)']['post'] = 'apitest/add/$1';
+
 $route["tes"] = "remap/tes/asd123";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
