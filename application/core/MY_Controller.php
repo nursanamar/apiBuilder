@@ -20,9 +20,9 @@ class MY_Controller extends CI_Controller {
 			$this->output->set_header($key." : ".$value);
 		}
 		 $this->output->set_content_type("application/json");
-		//  $this->output->set_header("Access-Control-Allow-Origin : *");
-		//  $this->output->set_header("X-Message : ApiBuilder/1.0");
-		//  $this->output->set_header("Server : ApiBuilder",true);
+		 $this->output->set_header("Access-Control-Allow-Origin: *");
+		 $this->output->set_header("X-Message: ApiBuilder/1.0");
+		 $this->output->set_header("Server: ApiBuilder",true);
 		$this->output->set_output(json_encode($data));
 	}
 
@@ -86,6 +86,30 @@ class MY_Controller extends CI_Controller {
 			'name' => $result['name']
 		);
 		return ($result === null )? false : true;
+	}
+
+	public function checkTable($table)
+	{
+		if ($this->db->table_exists($table)) {
+			if (in_array($table,array('tables','users'))) {
+				throw new Exception("Table forbiden", 1);
+			}else {
+					return true;
+			}
+		}else{
+			throw new Exception("Table ".$table." doest'n exists", 1);
+
+		}
+	}
+
+	public function sendError($message,$code = null)
+	{
+		$data = array('status' => 'error' ,'desc' => $message );
+		$this->output->set_content_type("application/json");
+		$this->output->set_header("Access-Control-Allow-Origin: *");
+		$this->output->set_header("X-Message: ApiBuilder/1.0");
+		$this->output->set_header("Server: ApiBuilder",true);
+	 $this->output->set_output(json_encode($data));
 	}
 
 }
